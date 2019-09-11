@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+		<title th:text="${projectTitle}">Sarazenen &amp; Pera</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="/css/style.css" />
+		<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<script src="/js/lib/jquery.quicksearch.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.28.5/js/jquery.tablesorter.js"></script>
+		<script src="/js/format.js"></script>
+		<script src="/js/workSourceLoader.js"></script>
+	</head>
+	<body>
+		<div th:replace="header :: header">...</div>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-3">
+					<h3 class="main-title">Quellenverzeichnis</h3>
+				</div>
+				<div class="col-md-9">
+					<!-- Quicksearch PlugIn, um Tabelle durchsuchen zu könnens -->
+					<form id="searchbutton"> 
+						Suche: <input type="text" id="search" class="suche"> </input>
+					</form>
+				</div>
+			</div>
+			<div class="row" id="workList">
+				<!-- Sidebar Links: WerkListe -->
+				<div class="col-md-12">
+					<!-- Quellenverzeichnis Tabelles -->
+					<table class="table tablesorter" id="workTable">
+						<!--  Tablesorter will nicht mehr! AG: Doch, er will wieder ... -->
+						<thead>
+							<tr>
+								<th>Id</th>
+								<th>Titel</th>
+								<th>Alternativtitel</th>
+								<th>Verfasser</th>
+								<th>Abfassungszeitraum</th>
+								<th>Abfassungsort</th>
+							</tr>
+						</thead>
+						<tbody id="bindWerk"> <!-- dynamisches Einbinden der Tabelleninhaltes, ab sofort per Thymeleaf! -->
+							<tr class="viewWorkInfo" th:each="document: ${documents}" th:attr="data-work=${document.workId}">
+								<td th:text="${document.workId}"></td>
+								<td th:text="${document.mainTitle}"></td>
+								<td th:text="${#strings.listJoin(document.altTitles, ', ')}"></td>
+								<td th:text="${#strings.listJoin(document.authors, ', ')}"></td>
+								<td th:text="${document.origDate}"></td>
+								<td th:text="${document.origPlace}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div id="workView" class="row">
+				<div class="col-md-2">
+					<div class="sidebar-module-l">
+						<ul class="list-group" id="mainList">
+							<!-- linke Quellenliste der Quellendarstellung mit Daten füllen, Clickevent hinzufügen -->
+							<!-- Auflistung mit WerktId und Werktitel -->
+							<li type="button" class="list-group-item" th:each="document: ${documents}">
+								<a href="#" class="loadWork" th:attr="data-work=${document.workId}" th:text="${document.workId + ': ' + document.mainTitle}">...</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!-- Ansicht der Quelleninhalte (10.12.'17: per Thymeleaf!). Inhalte werden alle dynamisch eingebunden. -->
+		</div><!-- /.container -->
+		<div th:replace="footer :: footer">...</div>
+	</body>
+</html>

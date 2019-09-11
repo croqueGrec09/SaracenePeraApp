@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dendrograph xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="dendrograph.xsd">
+    <remarkabilities name="PeraApp">
+        <superCategory name="Auffälligkeiten">
+            <remarkability>Bündnis</remarkability>
+            <remarkability>Verteidigung</remarkability>
+            <remarkability>Handel</remarkability>
+            <remarkability>Schulden</remarkability>
+            <remarkability>Alaun</remarkability>
+            <remarkability>Wachs</remarkability>
+            <remarkability>Seereise</remarkability>
+            <remarkability>Investition</remarkability>
+            <remarkability>societas</remarkability>
+            <remarkability>Auftragshandel</remarkability>
+            <remarkability>Wein</remarkability>
+            <remarkability>Bewaffnung</remarkability>
+            <remarkability>Sold</remarkability>
+            <remarkability>Pfand</remarkability>
+            <remarkability>Dienst</remarkability>
+            <remarkability>Vikariat</remarkability>
+            <remarkability>Erbe</remarkability>
+            <remarkability>Inventar</remarkability>
+            <remarkability>Grundstücksangelegenheit</remarkability>
+            <remarkability>Hungersnot</remarkability>
+            <remarkability>Friedensvertrag</remarkability>
+            <remarkability>Kassam Bei</remarkability>
+            <remarkability>Spende</remarkability>
+            <remarkability>Klage</remarkability>
+            <remarkability>Auftrag</remarkability>
+            <remarkability>Bezahlung</remarkability>
+            <remarkability>Vertrag</remarkability>
+            <remarkability>Strafe</remarkability>
+            <remarkability>Betrug</remarkability>
+            <remarkability>Säcke</remarkability>
+            <remarkability>Kästen</remarkability>
+            <remarkability>Schläuche</remarkability>
+            <remarkability>Fässer</remarkability>
+            <remarkability>Matten</remarkability>
+        </superCategory>
+        <superCategory name="Handelswaren">
+            <remarkability>Alaun</remarkability>
+            <remarkability>Wachs</remarkability>
+            <remarkability>Pfeffer</remarkability>
+            <remarkability>Wein</remarkability>
+            <remarkability>Getreide</remarkability>
+            <remarkability>Silber</remarkability>
+            <remarkability>Decken</remarkability>
+            <remarkability>Kupfer</remarkability>
+            <remarkability>Sklaven</remarkability>
+            <remarkability>Leinen</remarkability>
+            <remarkability>Indigo</remarkability>
+            <remarkability>Rindsfelle</remarkability>
+            <remarkability>Büffelfelle</remarkability>
+            <remarkability>Pferdefelle</remarkability>
+            <remarkability>Talg</remarkability>
+            <remarkability>Eisen</remarkability>
+            <remarkability>Zinn</remarkability>
+            <remarkability>Blei</remarkability>
+            <remarkability>Rosinen</remarkability>
+            <remarkability>Seife</remarkability>
+            <remarkability>Mandel</remarkability>
+            <remarkability>Honig</remarkability>
+            <remarkability>Baumwolle</remarkability>
+            <remarkability>Reis</remarkability>
+            <remarkability>Feigen</remarkability>
+            <remarkability>Auripigment</remarkability>
+            <remarkability>Schwefel</remarkability>
+            <remarkability>Pech</remarkability>
+            <remarkability>Fleisch</remarkability>
+            <remarkability>Käse</remarkability>
+            <remarkability>Wolle</remarkability>
+            <remarkability>Kastanien</remarkability>
+        </superCategory>
+    </remarkabilities>
+</dendrograph>

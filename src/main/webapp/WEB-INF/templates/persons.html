@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+		<title th:text="${projectTitle}">Sarazenen &amp; Pera</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="../css/theme.default.min.css" />
+		<link rel="stylesheet" href="/css/style.css" />
+		<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<script src="/js/lib/jquery.quicksearch.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.28.5/js/jquery.tablesorter.js"></script>
+		<script src="/js/format.js"></script>
+		<script src="/js/workSourceLoader.js"></script>
+	</head>
+	<body>
+		<div th:replace="header :: header">...</div>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-4">
+					<h3 class="main-title">Personenregister - erwähnte Personen</h3>
+				</div>
+				<div class="col-md-4">
+					<!-- Quicksearch PlugIn, um Tabelle durchsuchen zu können -->
+					<form>
+						Suche: <input type="text" id="search" />
+					</form>
+				</div>
+				<!-- Buttons -->
+				<div class="col-md-2">
+					<a href="persons">
+						<button type="button" class="list-group-item" id="persTable">erwähnte Personen</button>
+					</a>
+				</div>
+				<div class="col-md-2">
+					<a href="authors">
+						<button type="button" class="list-group-item" id="authorTable">Quellenverfasser</button>
+					</a>
+				</div>
+				<!-- /.row Buttons -->
+			</div>
+			<div class="row" id="mainList">
+				<!--  historische Persönlichkeiten Tabelle -->
+				<div class="col-md-9">
+					<table class="tablesorter" id="tablePers">
+					<!--  Tablesorter funktioniert sehr wohl wieder!!!!   -->
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Rolle</th>
+								<th>Alternativnamen</th>
+								<th>Vorkommnis</th>
+							</tr>
+						</thead>
+						<tbody id="bindPerson"> <!-- dynamisches Einbinden der Tabelleninhaltes, ab sofort per Thymeleaf! -->
+							<tr th:each="person: ${persons}">
+								<td th:text="${person.name}"></td>
+								<td th:text="${person.role}"></td>
+								<td>
+									<p th:each="altname: ${person.altNames}" th:text="${altname}"></p>
+								</td>
+								<td>
+									<a class="loadOccurence" href="#viewOccurence" data-queryType="person" th:attr="data-id=${person.id}"> Auflistung anzeigen </a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!-- Auflistung der Vorkommnisse des gewählten Begriffs in den Quellen - fixed position. Inhalte werden alle dynamisch eingebunden.-->
+				<div class="col-md-3">
+					<div id="viewOccurence">
+						
+					</div>
+				</div>
+			</div>
+			<!-- /.row Table + Vorkommnisse -->
+			<!--  Variante der Quellenansicht für die Vorkommnisse. Inhalte werden alle dynamisch eingebunden. -->
+			<div class="row" id="workView">
+				
+			</div>
+		<!-- /.row QuellenAnsicht-->
+		</div>
+		<!-- /. container -->
+		<div th:replace="footer :: footer">...</div>
+	</body>
+</html>
+
+

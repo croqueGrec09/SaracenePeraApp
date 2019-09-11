@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8" />
+		<title th:text="${projectTitle}">Sarazenen &amp; Pera</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="/css/style.css" />
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.js"></script>
+		<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js"></script>
+		<script type="text/javascript" src="/js/workSourceLoader.js"></script>
+		<script type="text/javascript" src="/js/frequency-load.js"></script>
+	</head>
+	<body>
+		<div th:replace="header :: header"></div>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<h3 class="main-title">Häufigkeiten</h3>
+				</div>
+				<!-- Hinweis zur Benutzung des Bar Chartss -->
+				<div class="col-md-12" id="anweisung">
+					<span class="glyphicon glyphicon-info-sign"></span> Klicken Sie auf den Balken oder die Zahl, um sich die Quellenstellen anzeigen zu lassen.
+				</div>
+			</div>
+			<!-- Buttons: Für was soll die Häufigkeit dargestellt werden -->
+			<div class="row" id="FrequButtons">
+				<div class="col-md-3">
+					<a href="#">
+						<button type="button" class="btn btn-default" id="frequPers">Personen</button>
+					</a>
+				</div>
+				<div class="col-md-3">
+					<a href="#">
+						<button type="button" class="btn btn-default" id="frequOrt">Orte</button>
+					</a>
+				</div>
+				<div class="col-md-3">
+					<a href="#">
+						<button type="button" class="btn btn-default" id="frequAuf">Auffälligkeiten</button>
+					</a>
+				</div>
+				<div class="col-md-3">
+					<a href="#">
+						<button type="button" class="btn btn-default" id="frequHand">Handelswaren</button>
+					</a>
+				</div>
+			</div>
+			<div class="row">
+				<!-- Bar Chart einbinden -->
+				<div class="col-md-9" id="chartWrapper">
+					<span id="bar-chart"></span>
+				</div>
+				<!-- Auflistung der Vorkommnisse des gewählten Begriffs in den Quellen - fixed position. Inhalte werden alle dynamisch eingebunden.-->
+				<div class="col-md-3" id="viewOccurence">
+					
+				</div>
+			</div>
+			<!--  Variante der Quellenansicht für die Vorkommnisse. Inhalte werden alle dynamisch eingebunden. -->
+			<div class="row" id="workView">
+				
+			</div>
+			<!-- /.row QuellenAnsicht-->
+		</div>
+		<div th:replace="footer :: footer"></div>
+	</body>
+</html>

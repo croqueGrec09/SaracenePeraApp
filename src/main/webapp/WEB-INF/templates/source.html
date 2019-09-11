@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	</head>
+	<body>
+	<!-- Ansicht der Werkinhaltes. Inhalte werden alle per Thymeleaf eingebunden. -->
+		<div th:fragment="sourceView" class='panel panel-default'>
+			<div class='panel-body'>
+				<h1 class='main-title'>Quellenstelle: <span th:text="${source.sourceId}"></span></h1>
+				<p class='sub-title' th:text="${source.citation}"></p>
+				<p th:if="${source.timeSource}">
+					<strong>zeitliche (Quellen-)Angabe: </strong>
+					<span id='zeitquel' th:text="${source.timeSource}"></span>
+				</p>
+				<p>
+					<strong>zeitliche (wissenschaftliche) Einordnung: </strong>
+					<span id='zeitwiss' th:text="${source.timeScientific.date}"></span>
+				</p>
+				<p>
+					<strong>Inhaltsangabe:</strong>
+					<span id='summary' th:text="${source.summary}"></span>
+				</p>
+				<hr/>
+				<p>
+					<strong>Volltext:</strong>
+				</p>
+				<p th:text="${source.origText}"></p>
+				<hr/>
+				<p>
+					<strong>Übersetzung:</strong>
+				</p>
+				<p th:text="${source.translation}"></p>
+				<hr/>
+				<p>
+					<strong>Hinweise zur Übersetzung (Zitation):</strong>
+				</p>
+				<p th:text="${source.transCit}"></p>
+				<hr/>
+				<br/>
+				<br/>
+				<p>
+					<strong>geographisches Stichwort: </strong>
+					<ul id='showGeoStichwort'>
+						<li th:each="geoKeyword : ${source.geoKeywords}">
+							<span th:text="${geoKeyword}"></span>
+						</li>
+					</ul>
+				</p>
+				<p>
+					<strong>Bericht über ein/mehrere Individuum/en oder Kollektive: </strong>
+					<ul id='showBeteiligte'>
+						<li th:each="concerned : ${source.concerned}">
+							<span th:text="${concerned}"></span>
+						</li>
+					</ul>
+				</p>
+				<p>
+					<strong>Interaktion (j/n): </strong>
+					<span th:text="${source.interaction}"></span>
+				</p>
+				<p>
+					<strong>Auffälligkeiten: </strong>
+					<ul id='showAufaell'>
+						<li th:each="remarkability : ${source.remarkabilities}">
+							<span th:text="${remarkability}"></span>
+						</li>
+					</ul>
+				</p>
+				<p>
+					<strong>Suchbegriffe: </strong>
+					<ul id='showSuchworte'>
+						<li th:each="searchTerm : ${source.searchTerms}">
+							<span th:text="${searchTerm}"></span>
+						</li>
+					</ul>
+				</p>
+				<p th:if="${!source.tradeGoods.empty}">
+					<strong>Handelswaren: </strong>
+					<ul id='showHandelswaren'>
+						<li th:each="tradeGood : ${source.tradeGoods}">
+							<span th:text="${tradeGood}"></span>
+						</li>
+					</ul>
+				</p>
+				<p>
+					<strong>Anmerkungen: </strong>
+				</p>
+				<p th:text="${source.annotations}"></p>
+			</div>
+		</div>
+	</body>
+</html>

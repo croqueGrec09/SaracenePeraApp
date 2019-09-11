@@ -1,0 +1,77 @@
+body {
+	padding-top: 50px;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	color: #555;
+}
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+	margin-top: 0;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-weight: normal;
+	color: #333;
+}
+
+.container {
+	margin-left: 25px;
+}
+
+footer {
+margin-left: 10px;
+}
+
+
+#map{
+color:black;
+height: 460px;
+margin-left:25px;
+margin-top: 50px;
+}
+
+#auffallendes {
+background-color: white;
+color: black;
+}
+
+#slider3{
+margin-left:25px;
+margin-bottom:40px;
+}
+
+#zeitausgabe{
+margin-left:25px;
+font: 20px;
+}
+
+#slider3textmin, #slider3textmax {
+	font-weight: bold;
+}
+
+#d3-slider-axis.d3-slider-axis-bottom{
+height:80px;	
+}
+
+.node, .node2 {
+  cursor: pointer;
+}
+
+.node circle {
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.node2 circle {
+  fill: #fff;
+  stroke: #b44646;
+  stroke-width: 1.5px;
+}
+
+.node text, .node2 text {
+  font-size: 10px;
+}
+
+.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1.5px;
+}

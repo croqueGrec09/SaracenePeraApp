@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head lang="de">
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+		<title>Sarazenen &amp; Pera</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="/css/style.css" />
+		<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<div th:replace="header :: header">...</div>
+		<div class="container-fluid">
+			<div class="row">
+				<!-- Header Titel -->
+				<div class="title-header">
+					<h1 class="main-title">Gruppe 1</h1>
+					<p class="sub-title">Experimentelle historische Informationssysteme:</p>
+					<p class="sub-title">Testbedingungen und Aufbau digitaler mittelalterlicher Quellensammlungen</p>
+					<p class="sub-title">Verarbeitung mehrdimensionaler Daten:</p>
+					<p class="sub-title">Die genuesische Handelsniederlassung Pera in spätbyzantinischer Zeit</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-10">
+					<p>
+						Dies ist ein Wegweiser, der zu zwei identisch aufgebauten Webanwendungen verweisen soll:
+						<ul>
+							<li><a href="SaraceneApp/">zur Visualisierung des Projektes "Saraceni, Mauri, Agareni, ... in lateinisch-christlichen Quellen des 7. bis 11. Jahrhunderts"</a></li>
+							<li><a href="PeraApp/">zur Visualisierung des Projektes "Die genuesische Handelsniederlassung Pera in spätbyzantinischer Zeit"</a></li>
+						</ul>
+					</p>
+					<hr/>
+					<p>
+						<strong>Dozenten:</strong>
+						<ol>
+							<li>Prof. Dr. Oyvind Eide</li>
+							<li>Katharina Gahbler, M.A.</li>
+							<li>Dr. Mabi Angar</li>
+						</ol>
+					</p>
+					<p>
+						<strong>Teilnehmer der Gruppe im Hauptseminar "Experimentelle historische Informationssysteme":</strong>
+						<ul>
+							<li>Alex Abboud</li>
+							<li>Andreas Gálffy</li>
+							<li>Britta Hermans</li>
+							<li>Dominik Leyendecker</li>
+							<li>Anne Pietsch</li>
+							<li>Nasrin Saef</li>
+							<li>Gwenlyn Tiedemann</li>
+							<li>Christian Weitz</li>
+						</ul>
+					</p>
+				</div>
+			</div> <!--  /. row -->
+		</div> <!-- /. container -->
+		<div th:replace="footer :: footer">...</div>
+	</body>
+</html>

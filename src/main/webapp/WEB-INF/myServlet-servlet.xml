@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	http://www.springframework.org/schema/beans 
+ 	http://www.springframework.org/schema/beans/spring-beans.xsd  
+   	http://www.springframework.org/schema/context
+   	http://www.springframework.org/schema/context/spring-context.xsd">
+	<!-- Created and configured by Anne-Kathrin Pietsch -->
+
+	<context:component-scan base-package="de.uni_koeln.sarazenen" />
+	<mvc:annotation-driven />
+
+	<mvc:resources location="css/" mapping="css/**"/>
+	<mvc:resources location="js/" mapping="js/**"/>
+	<mvc:resources location="fonts/" mapping="fonts/**"/>
+	<mvc:resources location="images/" mapping="images/**"/>
+	<mvc:resources location="data/" mapping="data/**"/>
+
+	<!-- Spring is told, that there are static resources at path xx that means 
+		that localhost:8080/css/style.css or http://DOMAIN[:PORT]/css/* isn't bound 
+		to the controller -->
+
+	<bean id="templateResolver"
+		class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
+		<property name="prefix" value="/WEB-INF/templates/" />
+		<property name="suffix" value=".html" />
+		<property name="characterEncoding" value="UTF-8" />
+		<property name="templateMode" value="HTML5" />
+	</bean>
+	<bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+		<property name="templateResolver" ref="templateResolver" />
+	</bean>
+	<bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+		<property name="characterEncoding" value="UTF-8" />
+		<property name="contentType" value="text/html; charset=UTF-8" />
+		<property name="templateEngine" ref="templateEngine" />
+	</bean>
+	<!-- The templateResolver bean properties prefix and suffix indicate the 
+		location of the view pages within the webapp directory and their filename 
+		extension. The ViewResolver interface in Spring MVC maps the view names returned 
+		by a controller to view objects. ThymeleafViewResolver implements the ViewResolver 
+		interface and is used to determine which Thymeleaf views to render, given 
+		a view name. -->
+</beans>
+

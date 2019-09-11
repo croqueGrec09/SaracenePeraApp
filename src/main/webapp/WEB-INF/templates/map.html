@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta charset="UTF-8" />
+		<title th:text="${projectTitle}">Sarazenen &amp; Pera</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="/css/leaflet.css" />
+		<link rel="stylesheet" href="/css/d3.slider.css" />
+		<link rel="stylesheet" href="/css/vis-style.css" />
+		<link rel="stylesheet" href="/css/style.css" />
+		<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js"></script>
+		<script src="/js/lib/d3.slider.js"></script>
+		<script src="/js/lib/leaflet.js"></script>
+		<script src="/js/mapJS.js"></script>
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+				var places = [[${places}]];
+				//console.log(places);
+			/*]]>*/
+		</script>
+		<script src="/js/addMarkers.js"></script>
+		<script src="/js/helpers.js"></script>
+		<script src="/js/tree_vis.js"></script>
+		<script src="/js/workSourceLoader.js"></script>
+	</head>
+	<body>
+		<div th:replace="header :: header"></div>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<h3 class="main-title">Karte</h3>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<span id="erlaeuterung">
+						<p>Auf dieser Karte sind die Orte eingetragen, die in den Quellen erwähnt werden. Zum Anzeigen von Quellenstellen innerhalb einer bestimmten Zeit die Regler bewegen und dann auf einen Ort klicken. Es können zusätzlich im linken Baum Auffälligkeiten ausgewählt werden. Treffen alle ausgewählten Auffälligkeiten zu, dann werden sie auf der Karte farblich gekennzeichnet. </p>
+						<p>Hierbei ist die Farbe zu beachten: mit Blautönen sind Auffälligkeiten markiert, mit Rottönen Handelswaren. Sollte ein Ort sowohl mit einer Handelsware als auch mit einer Auffälligkeit verknüpft sein, ist der Kreis violett gefärbt.</p>
+						<p>Nicht alle Quellen lassen sich wissenschaftlich eindeutig zuordnen. Wurden unterschiedliche Zeiträume angegeben, so ist dies auf der Karte mit berücksichtigt. Wurden in den Quellen <b> ungefähre </b> Werte angegeben, so wurde der Zeitraum für die Kartendarstellung nach folgenden Regeln ausgedehnt:</p>
+						<ul>
+							<li> <strong> vor </strong> Jahr 845  - Kartendarstellung von 835 bis 845 (Ausdehnung 10 Jahre vorher) </li>
+							<li> <strong> nach </strong> Jahr 845  - Kartendarstellung von 845 bis 855 (Ausdehnung 10 Jahre später)</li>
+							<li> <strong> um </strong> das Jahr 845 - Kartendarstellung von 840 bis 850 (Ausdehnung 5 Jahre vorher und 5 Jahre später) </li>
+						</ul>
+					</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-5" id="remarkabilities"></div>
+				<div class="col-md-7" id="georeferencing">
+					<div id="map"></div>
+					<div id="slider3"></div>
+					<div id="zeitausgabe">
+						<span id="zeitraum"></span>
+						<span id="slider3textmin"></span>
+						<span id="bis"></span>
+						<span id="slider3textmax"></span>
+						<p>Ausgewählte Auffälligkeiten oder Handelswaren: <span id="ausgewaehlteA"></span></p>
+					</div>
+				</div>
+			</div>
+			<!-- Quellenansicht -->
+			<div class="row" id="ausgabe">
+				<div class="col-md-2" id="showOrt"></div>
+				<div class="col-md-10" id="showSources"></div>
+			</div>
+			<!-- /.row -->
+		</div>
+		<div id="workView"></div>
+		<div th:replace="footer :: footer"></div>
+	</body>
+</html>

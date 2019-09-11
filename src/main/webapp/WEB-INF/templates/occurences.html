@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	</head>
+	<body>
+		<div th:fragment="viewOccurence" class="title-header-map">
+			<div id="showSelected">
+				<p>In folgenden Quellen kommt <span th:text="${queryType}"></span> '<strong th:text="${queryTerm}"></strong>' vor:</p>
+			</div>
+			<div id="showQuel">
+				<p th:each="result : ${sources}">
+					<a href='#sourceView' class='loadWork' th:attr="data-work=${result.work.workId}" th:text="${result.work.workId}+': '+${result.work.mainTitle}"></a>
+					<br/><span th:text="'Quellenstelle: '+${result.source.sourceId}"></span>
+				</p>
+			</div>
+			<span id="werkBack">zurück</span>
+		</div>
+		<div th:fragment="viewOccurenceModal" class="title-header-map">
+			<div id="showSelected">
+				<p>In folgenden Quellen kommt <span th:text="${queryType}"></span> '<strong th:text="${queryTerm}"></strong>' vor:</p>
+			</div>
+			<div id="showQuel">
+				<p th:each="result : ${sources}">
+					<a href='#sourceView' class='loadWorkPopup' th:attr="data-work=${result.work.workId}" th:text="${result.work.workId}+': '+${result.work.mainTitle}"></a>
+					<br/><span th:text="'Quellenstelle: '+${result.source.sourceId}"></span>
+				</p>
+			</div>
+			<span id="werkBack">zurück</span>
+		</div>
+	</body>
+</html>

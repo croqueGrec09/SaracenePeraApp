@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head lang="de">
+		<meta charset="UTF-8" />
+		<title th:text="${projectTitle}"></title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="/css/style.css" />
+		<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<div th:fragment="header" class="header">
+			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+				<a class="navbar-brand" href=".." th:text="${projectTitle}"></a>
+				<div th:if="${withProject == 'true'}" id="navbar" class="collapse navbar-collapse">
+					<ul class="navbar-nav navbar-toggler-right">
+						<li class="nav-item"><a class="nav-link" href="workList">Quellenverzeichnis</a></li>
+						<li class="nav-item dropdown">
+							<a id="person" href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" 
+							aria-expanded="false">
+								Personenregister<span class="caret"></span>
+							</a>
+							<div class="dropdown-menu" aria-labelledby="person">
+								<a class="dropdown-item" href="persons">erwähnte Personen</a>
+								<a class="dropdown-item" href="authors">Quellenverfasser</a>
+							</div>
+						</li>
+						<li class="nav-item"><a class="nav-link" href="places">Ortsregister</a></li>
+						<li class="nav-item dropdown">
+							<a id="visualising" href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" 
+							aria-expanded="false">
+								Visualisierungen<span class="caret"></span>
+							</a>
+							<div class="dropdown-menu" aria-labelledby="visualising">
+								<a class="dropdown-item" href="event">Auffälligkeiten</a>
+								<a class="dropdown-item" href="frequency">Häufigkeiten</a>
+								<a class="dropdown-item" href="map">Karte</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<img th:src="${headerImagePath}" />
+		</div>
+	</body>
+</html>

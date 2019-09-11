@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_corpus.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_corpus.rng" type="application/xml"
+	schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<teiCorpus xmlns="http://www.tei-c.org/ns/1.0">
+     <teiHeader>
+         <fileDesc>
+             <titleStmt>
+                 <title>title of corpus</title>
+                 <author>author</author>
+             </titleStmt>
+	        <publicationStmt>
+	           <publisher>Universität zu Köln</publisher>
+	            <availability>
+	                <p>
+	                  The source documents are freely available according to Prof. Dr. Matthias Becher and Katharina Gahbler
+	                </p>
+	            </availability>
+	        </publicationStmt>
+	        <sourceDesc>
+	           <p>Digital conversion of word-documents</p>
+	        </sourceDesc>
+         </fileDesc>
+         <profileDesc>
+             <particDesc>
+                 <listPerson>
+                     <person xml:id="bd709c6f-bdcc-4612-bb8f-ab0ebc4a198b">
+                         <persName type="main">Abd-el-Hakk</persName>
+                         <persName type="alt">Abdelbachi</persName>
+                         <persName type="alt">Abadelbach</persName>
+                         <note>Testrolle</note>
+                     </person>
+                 </listPerson>
+             </particDesc>
+             <settingDesc>
+                 <listPlace>
+                     <place xml:id="abf0b6ba-1f61-40e2-bfdf-3d692d87f074">
+                         <settlement>
+                            <placeName type="main">Jerusalem</placeName>
+                            <placeName type="alt">Ierusalem</placeName>
+                            <placeName type="alt">Hierosolyma</placeName>
+                            <placeName type="alt">Hierosolimam</placeName>
+                            <placeName type="alt">Hierosolima</placeName>
+                            <placeName type="alt">Hierusalem</placeName>
+                            <placeName type="alt">Iherusalem</placeName>
+                            <placeName type="alt">Hierosolimis</placeName>
+                            <placeName type="alt">Ierosolimam</placeName>
+                            <placeName type="alt">Ierosolima</placeName>
+                            <placeName type="alt">Ierosolimis</placeName>
+                            <placeName type="alt">Hierusolimam</placeName>
+                            <placeName type="alt">Ierosolymam</placeName>
+                            <placeName type="alt">Hierusolemam</placeName>
+                            <placeName type="alt">Hierusolema</placeName>
+                         </settlement>
+                         <location type="point">
+                             <geo n="lat">31.7683190</geo>
+		                     <geo n="lng">35.2137100</geo>
+                         </location>
+                         <location type="viewportSW">
+                             <geo n="lat">31.7096771</geo>
+                             <geo n="lng">35.0854311</geo>
+                         </location>
+                         <location type="viewportNE">
+                             <geo n="lat">31.8829601</geo>
+                             <geo n="lng">35.2652869</geo>
+                         </location>
+                     </place>
+                     <place xml:id="Ba35cdc4-43e0-4282-82be-dd3ef8752787" type="cloister">
+                         <placeName>
+                             
+                         </placeName>
+                     </place>
+                 </listPlace>
+             </settingDesc>
+         </profileDesc>
+     </teiHeader>
+     <TEI xml:id="SaraceneWork0001">
+         <teiHeader>
+             <fileDesc>
+                 <titleStmt>
+                     <title type="main">Chronicon sive Gesta Saxonum</title>
+                     <title type="alt">Chronik</title>
+                     <title type="alt">Geschichte der Sachsen</title>
+                     <author>
+                         <persName>Thietmar von Merseburg</persName>
+                         <date type="lifeDates">975-1018</date>
+                     </author>
+                 </titleStmt>
+                 <publicationStmt>
+                     <p/>
+                 </publicationStmt>
+                 <sourceDesc n="work">
+                     <bibl>
+                         Thietmar von Merseburg, Chronicon, ed. Robert Holtzmann (MGH SS rer. Germ. N.S. 9), Berlin 1935.
+                     </bibl>
+                 </sourceDesc>
+                 <sourceDesc n="source0001">
+                     <bibl type="source">
+                         Thietmar, Chronicon II, 25, ed. Holtzmann 1935, S. 68-71.
+                     </bibl>
+                     <bibl type="translation">
+                         Thietmar von Merseburg, Chronik II, 25, bearb. von Werner Trillmich (Ausgewählte Quellen zur deutschen Geschichte des Mittelalters. Freiherr vom Stein-Gedächtnisausgabe 9), Darmstadt 2002, S. 61 ff.
+                     </bibl>
+                 </sourceDesc>
+             </fileDesc>
+             <profileDesc>
+                 <creation>
+                     <placeName>Merseburg</placeName>
+                     <date>1012-1018</date>
+                 </creation>
+                 <settingDesc>
+                     <listPlace type="workRegions">
+                         <place><region>West- und Mitteleuropa</region></place>
+                         <place><region>Ostfrankenreich</region></place>
+                     </listPlace>
+                     <listPlace n="source0001" type="entities">
+                         <place corresp="#abf0b6ba-1f61-40e2-bfdf-3d692d87f074"/>
+                     </listPlace>
+                     <setting n="source0001">
+                         <date type="source" from-iso="970-01-01" to-iso="970-12-31">970</date>
+                         <date type="scientific" from-iso="965-01-01" to-iso="969-12-31">zwischen 965 und 969</date>
+                     </setting>
+                 </settingDesc>
+                 <abstract n="work">
+                     <p>Das Chronicon sive Gesta Saxonum, auch Chronik oder Geschichte der Sachsen genannt, wurde von Thietmar von 
+                        Merseburg zwischen 1012 und 1018 in acht Büchern verfasst. Thietmar, seit 1009 Bischof von Merseburg, 
+                        berichtet seit Beginn des zehnten Jahrhunderts bis zu seinem Tod über die Geschichte seines Bistums.
+                        Vgl. auch mit Hinweisen für weiterführende Literatur Thietmarus ep. Merseburgensis, Chronicon sive Gesta 
+                        Saxonum, in: Repertorium ‚Geschichtsquellen des deutschen Mittelalters‘ 
+                        [http://www.geschichtsquellen.de/repOpus_04425.html, 2016-08-01]; Gerd Althoff, Art. Thietmar v. Merseburg, 
+                        in: Lexikon des Mittelalters 8, Sp. 694-695 [Brepolis Medieval Encyclopaedias – Lexikon des Mittelalters 
+                        Online, http://apps.brepolis.net/lexiema/test/Default2.aspx, 2016-08-01]; David A. Warner, Art. Thietmar of 
+                        Merseburg, in: Enzyclopedia of the Medieval Chronicle 2 (2010), S. 1424f.</p>
+                 </abstract>
+                 <abstract n="source0001">
+                     <p n="summary">
+                         Kurz bevor Sarazenen die Stadt Jerusalem einnehmen, stirbt Hidda, die Mutter von Erzbischof Gero von Köln 
+                         während einer Pilgerfahrt um 970 [965/69].
+                     </p>
+                 </abstract>
+                 <particDesc n="source0001">
+                     <listPerson type="concerned">
+                         <person role="other"/>
+                         <personGrp role="other"/>
+                         <personGrp role="saracene"/>
+                     </listPerson>
+                     <listPerson type="entities">
+                         <person corresp="#a68ce951-456c-46b1-9d92-f9f840ed6ebe"/>
+                     </listPerson>
+                 </particDesc>
+                 <textClass n="source0001">
+                     <keywords n="geo">
+                         <term>Israel</term>
+                         <term>Jerusalem</term>
+                     </keywords>
+                     <keywords n="remarkabilities">
+                         <term>Belagerung</term>
+                         <term>Invasion</term>
+                         <term>Vorzeichen</term>
+                     </keywords>
+                     <keywords n="searchTerms">
+                         <term>Hierosolyma</term>
+                         <term>Ierusalem</term>
+                         <term>Jerusalem</term>
+                         <term>Saracenus</term>
+                         <term>Sarazene</term>
+                     </keywords>
+                 </textClass>
+                 <textDesc n="source0001">
+                     <channel/>
+                     <constitution/>
+                     <derivation/>
+                     <domain/>
+                     <factuality/>
+                     <interaction>n</interaction>
+                     <preparedness/>
+                     <purpose/>
+                 </textDesc>
+             </profileDesc>
+         </teiHeader>
+         <text n="source0001">
+             <body>
+                 <div xml:lang="lat">
+                     <p>
+                         Huius [Ebf. Gero von Köln] sancta mater, Hidda nomine, Ierusalem [Jerusalem] orationis gratia petens infirmata, hanc suis legationem pedissequis commendavit: ‘Egredienti animae meimet prolongato huius exilii incolatu, corpus meum matri terre celeriter tradite et, mox euntes, haec filio nunciate Geroni, quo peregrinae genitrici suae talem in terris non deneget honorem, qualem pius in caelis dare dignatus est Deus, et altare mihi in aecclesia sanctae constituat Ceciliae.’ Talibus preceptis devotae obtemperantes famule dominam suam post haec feliciter exspirantem sepelierunt et statim recendetes miseriam insciae effugierunt subsecuturam. Nam Saraceni Ierusolimam tunc invadentes nil reliquere vicits, quod sancta eis clam tunc predixit matron, cum se mortuam iussit propere tumulari et suas abire.
+                     </p>
+                 </div>
+                 <div xml:lang="de">
+                     <p>
+                         Seine [Ebf. Gero von Köln] fromme Mutter Hidda war nach Jerusalem gezogen um zu beten, und dort erkrankt. Da trug sie ihren Begleiterinnen folgende Botschaft auf: „Wenn meine Seele den Wohnort ihres langen Pilgerlebens verläßt, übergibt meinen Leib schnell der Mutter Erde und brecht sofort mit der Nachricht zu meinem Sohne Gero auf, damit er der fernen Mutter auf Erden nicht die Ehren verweigere, deren mich der gütige Gott im Himmel gewürdigt hat; in der Kirche der hl. Cäcilie soll er mir einen Altar errichten.“ Diesen Anweisungen gehorsam begruben dann ihre ergebenen Dienerinnen die selig verschiedene Herrin, kehrten sogleich heim und entrannen dadurch, ohne es zu ahnen, nahendem Unheil. Denn damals eroberten die Sarazenen Jerusalem und ließen den Besiegten nichts; das aber hatte ihnen die heilige Frau damals verhüllt vorausgesagt, als sie befahl, sie nach ihrem Tode sofort zu bestatten und dann abzureisen.
+                     </p>
+                 </div>
+             </body>
+             <back>
+                 <p>Gemeint ist die Schlacht von Capo Colonne, die zwischen dem 13. Und 16. Juli 982 stattgefunden hat, vgl. Thietmar von Merseburg, Chronik III, 20, bearb. von Werner Trillmich (Ausgewählte Quellen zur deutschen Geschichte des Mittelalters. Freiherr vom Stein-Gedächtnisausgabe 9), Darmstadt 2002, S. 109, Anm. 81.</p>
+             </back>
+         </text>
+     </TEI>     
+</teiCorpus>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	</head>
+	<body>
+	<!-- Ansicht der Werkinhaltes. Inhalte werden alle per Thymeleaf eingebunden. -->
+		<div th:fragment="workView" class="col-md-10">
+			<div class="row">
+				<!-- Header Titel -->
+				<div id="showTitle" class="title-header col-md-12">
+					<h1 class="main-title" th:text="${work.mainTitle}"></h1>
+					<p class="sub-title" th:text="${#strings.listJoin(work.altTitles, ', ')}"></p>
+				</div>
+			</div>
+			<div class="row">
+				<!-- Main Content: Abfassungszeitraum, Abfassungsort, Regionen, Editionshinweise und Werkinformationen-->
+				<div class="col-md-8 work-main">
+					<div id="showContent">
+						<p>
+							<strong>Abfassungszeitraum: </strong><span th:text="${work.origDate}"></span>
+						</p>
+						<p>
+							<strong>Abfassungsort: </strong><span th:text="${work.origPlace}"></span>
+						</p>
+						<p th:if="${!work.workRegions.empty}">
+							<strong>Region:</strong>
+							<ul id='showRegion'>
+								<li th:each="region: ${work.workRegions}">
+								<span th:text="${region}"></span>
+								</li>
+							</ul>
+						</p>
+						<p>
+							<strong>Editionshinweise: </strong><span th:text="${work.edRemarks}"></span>
+						</p>
+						<hr/>
+						<p>
+							<strong>Allgemeines:</strong><span th:text="${work.workInformation}"></span>
+						</p>
+					</div>
+					<div id="showMoreContent">
+					
+					</div>
+				</div>
+				<!--  Sidebar Rechts (blaue Box)s: QuellenListe-->
+				<div class="col-md-4">
+					<div id="showInfo" class='sidebar-module-r sidebar-module-inset'>
+						<h4>Verfasser</h4>
+						<p th:text="${#strings.listJoin(work.authors, ', ')}"></p>
+						<p th:text="${work.lifeDates}"></p>
+					</div>
+					<div class="sidebar-module-r">
+						<ol class="list-unstyled" id="sourceList">
+							<li th:each="source: ${work.sources}">
+								<a href="#" class="viewSource" th:attr="data-work=${work.workId}, data-source=${source.sourceId}" th:text="${source.sourceId}"></a> <a th:href="@{'/edit/source/' + ${work.workId} + '/' + ${source.sourceId}}">bearbeiten</a>
+							</li>
+						</ol>
+						<span id="workBack">
+							<a href='#'><button type='button' class='list-group-item'>Ansicht schließen</button></a>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,481 @@
+/*
+	Code von Alexander Abboud. Die Ajax-Abfrage für den Ort wurde nach dem Vorbild von Gwenlyn Tiedemann gebaut. Die clickCompare
+	Funktion sowie die Darstellung der Quelle wurde von Gwenlyn Tiedemann gebaut und von mir durch einen Einbezug der Zeitangaben
+	(des Sliders und der Quellen) sowie der Auffälligkeitsangaben (um die Textboxen später ansprechbar zu machen) erweitert.
+			Anmerkung Tiedemann: Quellendarstellung entspricht einer gespiegelten Variante 2.
+*/
+
+/* 
+	Folgende Funktion ist für die Erstellung der Marker zuständig. Es werden mit Hilfe einer Ajaxabfrage alle <Ort>-Elemente von <Orte>
+	aus dem Ortsregister eingelesen. Es werden sowohl die Marker erstellt, als auch ein "Lexikon" mit den Orten und zugehörigen Geokoordinaten,
+	auf welches bei der JSON Erstellung zurückgegriffen wird.
+*/
+
+function addMarkers(alle_orte, map){
+		
+	var parseDate = d3.time.format("%Y-%m-%d").parse;
+	
+	// Die Icons für die Pins auf der Karte werden hier eingelesen
+	var smallIcon = L.icon({
+    iconUrl: '../images/ma.svg',
+
+    iconSize:     [22, 40], // Größe des Icons
+    iconAnchor:   [10, 38], // Der Punkt des Icons, der auf der Geokoordinate liegt (in diesem Fall die untere Spizte)
+    popupAnchor:  [1, -37] // Der Punkt von dem aus das Popup geöffnet wird
+});
+
+
+        $.ajax({
+            type: "GET",
+            url: "data/Sarazenen_Final_Map_v0.1.xml",
+            dataType: "xml",
+            success: function(xml){
+            
+		/* Ein Array für die Markerelemente */			
+			var frage = [];	
+           
+		    var alternativnamen, altname;
+            var entitaet, entitaetlist;
+
+			var dokument = $(xml).find('Dokumente');
+        	var orte = $(xml).find('Orte');
+            var ort = $(orte).find('Ort');
+			
+ 		    var ort_name, ort_typ, geo_als_string;
+			var ort_location = [1];	
+            var Werktitel, WerkId, Autor, LebensdatenVerfasser, Abfassungszeitraum, Abfassungsort, Region, Editionshinweise, Werkinformation;            	
+			
+			/* Es werden die Ortsangaben aus der XML eingelesen. Hierfür werden die entsprechenden Tags eines Orts durchgegangen (Ort, Geokoordinaten und Typ) */
+			for (var i = 0; i < ort.length; i++) {
+	  	      ort_name = $(ort[i]).children('Name').text();
+			  ort_typ = $(ort[i]).children('Typ').text();
+			  ort_location[0] = $(ort[i]).find('geometry location lat').text();
+			  ort_location[1] = $(ort[i]).find('geometry location lng').text();
+			  
+			
+			/*
+				Die Geokoordinaten werden als ein String gespeichert und dann in einem Objekt unter dem Namen des Orts in einem Array abgelegt
+				Somit kann auf die Geokoordinate zugegriffen werden, wenn sie für die JSON Erstellung notwendig ist
+			*/
+				geo_als_string = ort_location.join();
+				alle_orte[ort_name] = geo_als_string;
+
+			/* 
+				Die einzelnen Marker. An dieser Stelle wird direkt festgelegt, dass sie das oben definierte Icon nutzen. Auch bekommt der Marker
+				die aktuell in den Variablen gespeicherten Geokoordinaten des Ortes. Der Text des Popups (Ort und Typ des Orts) wird auch an dieser Stelle festgelegt.
+				Wird ein Ort angeklickt, so öffnet sich außerdem der Abschnitt mit der Übersicht, wo er auftaucht */
+	        
+			frage = L.marker([ort_location[0],ort_location[1]], {icon: smallIcon}).addTo(map)
+				.bindPopup(ort_name+" ("+ort_typ+")")
+				.on('click', clickCompare.bind($('#vorkommnis_'+i), ort[i]));
+			
+				
+
+			/*
+				Um die Marker ansprechbar zu machen, bekommen sie eine Klasse. Sie werden ansprechbar gemacht, damit sie ein- und ausgeblendet werden können:
+				Nur aktive Marker (bedeutet es existieren Quellenstellen zu dieser Zeit und diesem Ort) werden eingeblendet. Hierfür wird bei der Quellenauswertung der mapJS
+				ein Array mit den aktiven Orten gefüllt. Anschließend werden die aktiven Marker über das Style-Attribut "display:block" eingeblendet.
+			*/
+			
+				L.DomUtil.addClass(frage._icon, (parseClass(ort_name)+' '+parseClass(ort_typ)));
+				d3.select("#map").selectAll("img."+parseClass(ort_name)).style("display", "none");
+				
+	  	    }
+			
+/*
+	Diese Funktion wird ausgeführt, sobald ein Ort angeklickt wurde. Es werden daraufhin die Quellenstellen aufgelistet, die zu diesem Ort
+	existieren. Die Ajaxabfrage zur Darstellung	wurde von Gwenlyn Tiedemann gebaut und durch eine Berücksichtigung der Zeit- und Sliderangaben, sowie der
+	Klassenhinzufügung von mir erweitert.
+*/
+		function clickCompare(xml){
+			$('#ausgabe').show(); 
+
+		/* Zeiten des Slider einlesen um damit später den Abgleich machen zu können */	
+			var sliderStart = $('#slider3textmin').text();
+			var sliderEnde = $('#slider3textmax').text();	
+			
+			if (sliderStart == "") { sliderStart = "0737";}
+            if (sliderEnde == "") { sliderEnde = "0799";}
+		/*
+			Umrechnung der Textangabe mit parseDate in eine Datumsform von D3, mit anschließender Transformation in Milisekunden.
+			Somit kann mit den Zeitwerden gerechnet und die Werte mit den Slidern verglichen werden. Es werden nur die aktiven Einträge aufgeglistet
+		*/		
+			sliderStartAsDate = new Date(sliderStart);
+			sliderEndeAsDate = new Date(sliderEnde);
+			sliderStartAsMS = +sliderStartAsDate;
+		  	sliderEndeAsMS = +sliderEndeAsDate;
+			var slider = [sliderStartAsMS, sliderEndeAsMS];
+
+	        	$('#showOrt').empty();
+	        	$('#showQuel').empty();
+
+	  		  var selected_object = $(xml).find('Name').eq(0);
+	  		 
+	     	    for (var i = 0; i < dokument.length; i++){
+	     	    	
+	     	    	var werkid = $(dokument[i]).find('WerkId');
+	     	    	var werktitel = $(dokument[i]).find('WerkTitel');	     	    	
+	     	    	var quelle = $(dokument[i]).find('Quelle');
+							
+					
+	     	    		for (var ii = 0; ii < quelle.length; ii++){
+							
+							var ZeitangabeWissenschaft = $(quelle[ii]).find('ZeitangabeWissenschaft Datum');
+							var AuffaelligkeitenArray = [];
+							var foo = [];
+								
+	
+		/* 
+			Ein Array für die Auffälligkeiten wird hier erstellt, um es später als Klassenbezeichnung der entsprechenden Textbox auszugeben.
+			Somit ist ein einfärben / Kasten setzen der Quellenstellen möglich, in denen die Auffälligkeiten vorkommen
+		*/
+							var Auffaelligkeiten = $(quelle[ii]).find('Auffaelligkeiten Schlagwort');
+							for (var a = 0; a < Auffaelligkeiten.length; a++) {
+								AuffaelligkeitenArray[a] = parseClass($(Auffaelligkeiten[a]).text());
+							}
+							var AuffaelligkeitenArrayJSON = '"' + AuffaelligkeitenArray.join(' ') + '"';
+								
+							
+							
+		/* 	Für die Darstellung in der Seitenleiste werden die gesamten Werte von Time_from bis Time_to genutzt,
+			da die Quellenstellen sowieso nur einmal ausgegeben werden. Während auf der Karte jedes Datum als eigener Kreis angezeigt wird,
+			wird die Textausgabe nur einmal erfolgen
+		*/			
+							
+					if (ZeitangabeWissenschaft.length != 0) {
+						
+						for (var s = 0; s < ZeitangabeWissenschaft.length; s++) {
+							ZeitangabeWissenschaft_from = $(ZeitangabeWissenschaft[s]).attr('From');
+							ZeitangabeWissenschaft_to = $(ZeitangabeWissenschaft[s]).attr('To');
+					
+							var ZeitangabeWissenschaft_fromInDate = new Date(parseDate(ZeitangabeWissenschaft_from));
+							var ZeitangabeWissenschaft_toInDate = new Date(parseDate(ZeitangabeWissenschaft_to));
+							var ZeitangabeWissenschaft_fromInMS =+ZeitangabeWissenschaft_fromInDate;
+							var ZeitangabeWissenschaft_toInMS =+ZeitangabeWissenschaft_toInDate;
+													
+							foo.push([ZeitangabeWissenschaft_fromInMS, ZeitangabeWissenschaft_toInMS]);
+						}
+						
+						for (kl = 0 ; kl < foo.length ; kl++) {
+		/* 	
+			Nur, wenn die ausgewählten Sliderzeiten zutreffend sind, wird eine Textausgabe hergestellt. 
+			In der Auflistung erscheint die Quellenstelle nicht doppelt, selbst, wenn es zwei passende Daten gibt, da die if-Schleife durch break
+			- im Falle eines Fundes in der Quelle - abgebrochen wird
+		*/
+						if ((foo[kl][0] >= slider[0]) && (foo[kl][1] <= slider[1])) {
+			
+	     	    			var quellenid = $(quelle[ii]).find('QuellenId');
+
+	     	    			 entitaet = $(quelle[ii]).find('Entitaet');
+	     	    			 
+	     	    				for (var iii = 0; iii < entitaet.length; iii++){
+	     	    					 entitaetlist = $(entitaet[iii]).find('Name');
+	     	    					 
+	     	    			if (selected_object.text() == entitaetlist.text())
+	     	    				{
+
+	     	    				var ortHeader = "<p>In folgenden Quellen wird der Ort '<b>"+ selected_object.text() +"</b>' zur Zeit <b>"+sliderStart+"</b> bis <b>"+sliderEnde+"</b> erwähnt:  </p>";
+	    	    				$('#showOrt').html(ortHeader);
+	    	    				$('#showQuel').append("<p class="+AuffaelligkeitenArrayJSON+"> <span  id='dokument_"+i+"'><a href='#quellAnsicht'> "+werkid.text()+": "+werktitel.text()+"</a></span>" +
+	    	    			  	  		" <br> Quellenstelle: "+quellenid.text()+ " </p>");
+	     	    			  	  
+	     	    			  	$('#dokument_' + i).click(displayWerkInfo.bind($('#dokument_' + i), dokument[i]));				
+								}
+	     	    		} // Entität
+					break;
+					}	 //if-Ausgabe
+						} // for kl
+					
+					
+					} else {
+					 // console.log("Keine Zeit");	
+					}
+				
+				} // Quelle
+	     	    } // Dokumente
+		/* Falls bereits Auffälligkeiten ausgewählt wurden, wird durch Aufruf der folgenden Funktion gewährleistet, dass die farblichen Markierungen korrekt bleiben */
+				quellen_ausgeben("vonOrt");
+	        	} // /.Function clickCompare
+			
+			//Ende WerkLoad
+			
+				
+	  	function displayWerkInfo(xml) {
+
+	  		//Listen leeren, um neuen Inhalt anzuzeigen	  		
+	  		$('#QuelList').empty();
+	  		$('#sidebar-l').empty();
+	  		$('#showQuelInfo').empty(); 
+	  		$('#showMoreContent').empty();
+	  		
+	  		
+	  	
+		  	$('#QuelList').append('<h4>Quellenstellen</h4>');
+		  	$('#sidebar-l').append('Quellen');
+
+
+		  	
+		  //Elemente verstecken/anzeigen
+	  		$('#quellAnsicht').show(); //Quellentext Vollansicht anzeigen
+	  		
+
+		  	
+		  	//Anklicken der Quellenstellen => laden der jeweiligen Quellenstellen-Informationen
+	  		var quelle = $(xml).find('Quelle')
+		  	      for(var j = 0; j < quelle.length;j++){
+			  	      $('#QuelList').append('<li id="quelle_' + j +'"><a href="#quellAnsicht">' + $(quelle[j]).find('QuellenId').text() +'</a></li>');
+			  	      $('#quelle_' + j ).click(displayQuelInfo.bind($('#quelle_' + j), quelle[j]));
+		  	      }
+	  		
+	  	//finden der XML-Taginhalte
+	  		  WerkTitel= $(xml).find('WerkTitel').text();
+		  	  WerkId = $(xml).find('WerkId').text();
+		  	  LebensdatenVerfasser = $(xml).find('LebensdatenVerfasser').text();
+		  	  Abfassungszeitraum = $(xml).find('Abfassungszeitraum').text();
+		  	  Abfassungsort = $(xml).find('Abfassungsort').text();
+		  	  Editionshinweise = $(xml).find('Editionshinweise').text();
+		  	  Werkinformation = $(xml).find('Werkinformation').text();
+		  	  
+		  	  
+				 // ausgeben der XML-Inhalte
+		  	  var werkHeader = "<h1 class='main-title'>"+WerkTitel+"</h1> <p class='sub-title' id='altTitel'> </p>";
+		  	  $('#showTitel').html(werkHeader);
+
+		  	  var werkInfo = "<p><b>Abfassungszeitraum:</b> "+Abfassungszeitraum+"</p><p><b>Abfassungsort:</b> "+Abfassungsort+"</p><p><b>Region:</b><ul id='showRegion'></ul></p><p><b>Editionshinweise:</b> <p>"+Editionshinweise+"</p><hr><p><b>Allgemeines </b></p>"+Werkinformation+"</p></hr>";
+		  	  $('#showContent').html(werkInfo);
+		  	  
+		  	  var verfInfo = "<div  class='sidebar-module-r sidebar-module-inset'><h4>Verfasser</h4><p><span id='showAuthor'></span>("+LebensdatenVerfasser+ ")</br></p></div>";
+		  	  $('#showInfo').html(verfInfo);
+		  	  
+	  	//finden und ausgeben der untergeordneten Inhalte
+		  	  
+		  	  var altTitelArray = [];
+		  	  var altTitelList;
+	  	var altTitel = $(xml).find('Alternativtitel')
+	      for(var i = 0; i < altTitel.length;i++){
+	    	  var titel = $(altTitel[i]).find('Titel')
+	    	  for (var ii = 0; ii < titel.length; ii++){
+	    		  altTitelArray[ii] = $(titel[ii]).text();
+	    		  altTitelList = altTitelArray.join(', ');
+	    	  }	  	    	  
+	    	  $('#altTitel').append(altTitelList);
+	      }
+	  	
+		
+	  	
+	  	autoren = $(xml).find('Autoren')					
+	      for(var i = 0; i < autoren.length;i++){
+	    	 autor = $(autoren[i]).find('Autor')
+	    	  for (var ii = 0; ii < autor.length; ii++){
+	    		  $('#showAuthor').append($(autor[ii]).text()+'<br>');
+	    	  }	  	    	  
+	      }
+	  	
+	  	var regionen = $(xml).find('Regionen')				
+	      for(var i = 0; i < regionen.length;i++){
+	    	 var region = $(regionen[i]).find('Region')
+	    	  for (var ii = 0; ii < region.length; ii++){
+	    		  $('#showRegion').append($(region[ii]).text()+'<br>');
+	    	  }	  	    	  
+	      }
+
+
+
+	  	}
+
+	  	function displayQuelInfo(xml) {
+	  		$('#showTitel').empty();
+	  		$('#showContent').empty();
+	  		$('#showInfo').empty();
+		  	$('#showMoreContent').empty();
+
+	  		// finden der XML-Inhalte
+		  	  var QuellenId= $(xml).find('QuellenId').text();
+		  	  var Zitation = $(xml).find('Zitation').text();
+		  	  var ZeitangabeQuelle = $(xml).find('ZeitangabeQuelle').text();
+		  	  var Inhaltsangabe = $(xml).find('Inhaltsangabe').text();
+		  	  var VolltextOrig = $(xml).find('VolltextOriginalsprache').text();
+		  	  var VolltextUeb = $(xml).find('VolltextUebersetzung').text();
+		  	  var ZitationsUeb = $(xml).find('ZitationUebersetzung').text();
+		  	  var Interaktion = $(xml).find('Interaktion').text();
+		  	  var Anmerkungen = $(xml).find('Anmerkungen').text();
+		  	  		  	  
+			  	// ausgeben der XML-Inhalte
+		  	  var quelHeader = "<h1 class='main-title'>Quellenstelle: "+QuellenId+"</h1><p class='sub-title'>"+Zitation+"</p>"
+		  	  $('#showTitel').html(quelHeader);
+		  	  
+		  	  var quelInfo = "<p><b>zeitliche (Quellen-)Angabe: </b>" +ZeitangabeQuelle+"</p><p><b>zeitliche (wissenschaftliche) Einordnung: </b><span id='zeitwiss'></span></p><p><b>Inhaltsangabe:</b> " +Inhaltsangabe+"</p><hr> <p> <b>Volltext </b></p><p>"+VolltextOrig+"</p></hr><hr><p><b>Übersetzung:  </b></p><p>"+VolltextUeb+"</p></hr><hr><p><b>Hinweise zur Übersetzung (Zitation):</b></p><p>"+ZitationsUeb+"</p></hr><br></br>";
+		  	  $('#showContent').html(quelInfo);
+		  	  
+		  	  var werk = "<div  class='sidebar-module-r sidebar-module-inset'><h4> Werk </h4><p>"+WerkTitel+"</p><p>"+Abfassungszeitraum+"</p><p>"+Abfassungsort+"</p><h5><b>Verfasser</b></h5><p><div id='showAuthor'></div> ("+LebensdatenVerfasser+")</p></div>";
+		  	  $('#showInfo').html(werk);
+		  	  
+		  	  var moreInfo = "<div class='panel panel-default'><div class='panel-body'><p><b>geographisches Stichwort: </b><ul id='showGeoStichwort'></ul></p><p><b>Bericht über ein/mehrere Individuum/en oder Kollektive: </b><ul id='showBeteiligte'></ul></p><p><b>Interaktion (j/n): </b>"+Interaktion+"</p><p><b>Auffälligkeiten: </b><ul id='showAufaell'></ul></p><p><b>Suchbegriffe: </b><ul id='showSuchworte'></ul></p><p><b>Anmerkungen: </b></p><p>"+Anmerkungen+"></p></div></div>";
+		  	  $('#showMoreContent').html(moreInfo);
+		  	  
+		  	  //erneutes Aufrufen und ausgeben der Autoren
+		  	  for(var i = 0; i < autoren.length;i++){
+			    	 autor = $(autoren[i]).find('Autor')
+			    	  for (var ii = 0; ii < autor.length; ii++){
+			    		  $('#showAuthor').append($(autor[ii]).text()+'<br>');
+			    	  }	  	    	  
+			      }
+		  	  
+		  	  //finden und ausgeben der untergeordneten Inhalte
+		  	var GeoStichwort = $(xml).find('GeographischesStichwort')					
+		      for(var i = 0; i < GeoStichwort.length;i++){
+		    	 var ort = $(GeoStichwort[i]).find('Ort')
+		    	  for (var ii = 0; ii < ort.length; ii++){
+		    		  $('#showGeoStichwort').append('<li>'+$(ort[ii]).text()+'</li>');
+		    	  }	  	    	  
+		      }
+		  	var Beteiligte = $(xml).find('Beteiligte')					
+		      for(var i = 0; i < Beteiligte.length;i++){
+		    	 var Beteiligter = $(Beteiligte[i]).find('Beteiligter')
+		    	  for (var ii = 0; ii < Beteiligter.length; ii++){
+		    		  $('#showBeteiligte').append('<li>'+$(Beteiligter[ii]).text()+'</li>');
+		    	  }	  	    	  
+		      }
+		  	var Auffaelligkeiten = $(xml).find('Auffaelligkeiten ')					
+		      for(var i = 0; i < Auffaelligkeiten.length;i++){
+		    	 var Schlagwort = $(Auffaelligkeiten[i]).find('Schlagwort')
+		    	  for (var ii = 0; ii < Schlagwort.length; ii++){
+		    		  $('#showAufaell').append('<li>'+$(Schlagwort[ii]).text()+'</li>');
+		    	  }	  	    	  
+		      }
+		  	
+		  	
+		  	var Suchbegriffe = $(xml).find('Suchbegriffe')					
+		      for(var i = 0; i < Suchbegriffe.length;i++){
+		    	 var Suchwort = $(Suchbegriffe[i]).find('Suchwort')
+		    	  for (var ii = 0; ii < Suchwort.length; ii++){
+		    		  $('#showSuchworte').append('<li>'+$(Suchwort[ii]).text()+'</li>');
+		    	  }	  	    	  
+		      }
+		  	
+    		var  datumArray = [];
+    		var DatumList;
+		  	var ZeitWiss = $(xml).find('ZeitangabeWissenschaft')
+		      for(var i = 0; i < ZeitWiss.length;i++){
+		    	  var Datum = $(ZeitWiss[i]).find('Datum')
+		    	  for (var ii = 0; ii < Datum.length; ii++){
+		    		datumArray[ii] = $(Datum[ii]).attr('Text');
+		    		DatumList = datumArray.join(', ');  		    		  
+		    	  }
+		    		  $('#zeitwiss').append(DatumList);
+		    	  }	  	    	  
+
+
+		  	  
+	  	
+	  	}
+	  	
+            },
+            error: function() {
+            alert("An error occurred while processing XML file.");
+            }
+            }); // Ende Ajax xml Sarazenen
+		
+          
+	return alle_orte;
+	};
+	
+/* Code ab hier von Gwen */		
+	  	function displayWerkInfo(xml) {
+
+	  		//Listen leeren, um neuen Inhalt anzuzeigen	  		
+	  		$('#QuelList').empty();
+	  		$('#sidebar-l').empty();
+	  		$('#werkBack').empty();
+	  		$('#showQuelInfo').empty(); 
+	  		$('#showMoreContent').empty();
+	  		
+	  		
+	  	
+		  	$('#QuelList').append('<h4>Quellenstellen</h4>');
+		  	$('#sidebar-l').append('Quellen');
+		  	$('#werkBack').append(" <a href='#'><button type='button' class='list-group-item'>Zurück zum Quellenverzeichnis</button></a>");
+
+
+		  	
+		  //Elemente verstecken/anzeigen
+	  		$('#werkTable').hide();
+	  		$('#searchbutton').hide();
+	  		$('#quellAnsicht').show(); //Quellentext Vollansicht anzeigen
+	  		
+		  	$('#authBack').click(function(){
+		  		$('#tableAuth').show();
+		  		$('#searchbutton').show();
+		  		$('#quellAnsicht').hide();
+		  	})
+		  	
+		  	$('#werkBack').click(function(){
+		  		$('#werkTable').show();
+		  		$('#searchbutton').show();
+		  		$('#quellAnsicht').hide();
+		  	})
+		  	
+		  	//Anklicken der Quellenstellen => laden der jeweiligen Quellenstellen-Informationen
+	  		var quelle = $(xml).find('Quelle')
+		  	      for(var j = 0; j < quelle.length;j++){
+			  	      $('#QuelList').append('<li id="quelle_' + j +'"><a href="#quellAnsicht">' + $(quelle[j]).find('QuellenId').text() +'</a></li>');
+			  	      $('#quelle_' + j ).click(displayQuelInfo.bind($('#quelle_' + j), quelle[j]));
+		  	      }
+	  		
+	  	//finden der XML-Taginhalte
+	  		  WerkTitel= $(xml).find('WerkTitel').text();
+		  	  WerkId = $(xml).find('WerkId').text();
+		  	  LebensdatenVerfasser = $(xml).find('LebensdatenVerfasser').text();
+		  	  Abfassungszeitraum = $(xml).find('Abfassungszeitraum').text();
+		  	  Abfassungsort = $(xml).find('Abfassungsort').text();
+		  	  Editionshinweise = $(xml).find('Editionshinweise').text();
+		  	  Werkinformation = $(xml).find('Werkinformation').text();
+		  	  
+		  	  
+				 // ausgeben der XML-Inhalte
+		  	  var werkHeader = "<h1 class='main-title'>"+WerkTitel+"</h1> <p class='sub-title' id='altTitel'> </p>";
+		  	  $('#showTitel').html(werkHeader);
+
+		  	  var werkInfo = "<p><b>Abfassungszeitraum:</b> "+Abfassungszeitraum+"</p><p><b>Abfassungsort:</b> "+Abfassungsort+"</p><p><b>Region:</b><ul id='showRegion'></ul></p><p><b>Editionshinweise:</b> <p>"+Editionshinweise+"</p><hr><p><b>Allgemeines </b></p>"+Werkinformation+"</p></hr>";
+		  	  $('#showContent').html(werkInfo);
+		  	  
+		  	  var verfInfo = "<div  class='sidebar-module-r sidebar-module-inset'><h4>Verfasser</h4><p><span id='showAuthor'></span>("+LebensdatenVerfasser+ ")</br></p></div>";
+		  	  $('#showInfo').html(verfInfo);
+		  	  
+	  	//finden und ausgeben der untergeordneten Inhalte
+		  	  
+		  	  var altTitelArray = [];
+		  	  var altTitelList;
+	  	var altTitel = $(xml).find('Alternativtitel')
+	      for(var i = 0; i < altTitel.length;i++){
+	    	  var titel = $(altTitel[i]).find('Titel')
+	    	  for (var ii = 0; ii < titel.length; ii++){
+	    		  altTitelArray[ii] = $(titel[ii]).text();
+	    		  altTitelList = altTitelArray.join(', ');
+	    	  }	  	    	  
+	    	  $('#altTitel').append(altTitelList);
+	      }
+	  	
+		
+	  	
+	  	autoren = $(xml).find('Autoren')					
+	      for(var i = 0; i < autoren.length;i++){
+	    	 autor = $(autoren[i]).find('Autor')
+	    	  for (var ii = 0; ii < autor.length; ii++){
+	    		  $('#showAuthor').append($(autor[ii]).text()+'<br>');
+	    	  }	  	    	  
+	      }
+	  	
+	  	var regionen = $(xml).find('Regionen')				
+	      for(var i = 0; i < regionen.length;i++){
+	    	 var region = $(regionen[i]).find('Region')
+	    	  for (var ii = 0; ii < region.length; ii++){
+	    		  $('#showRegion').append($(region[ii]).text()+'<br>');
+	    	  }	  	    	  
+	      }
+
+
+
+	  	}
+
+	  

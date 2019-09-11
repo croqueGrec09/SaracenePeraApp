@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="Sarazenen">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Personen"/>
+        <xs:element ref="Orte"/>
+        <xs:element maxOccurs="unbounded" ref="Dokumente"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Personen">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="Person"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Person">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Id"/>
+        <xs:element ref="Name"/>
+        <xs:element ref="Rolle"/>
+        <xs:element ref="Alternativnamen"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Rolle" type="xs:string"/>
+  <xs:element name="Orte">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="Ort"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Dokumente">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="WerkId"/>
+        <xs:element ref="WerkTitel"/>
+        <xs:element ref="Alternativtitel"/>
+        <xs:element ref="Autoren"/>
+        <xs:element ref="LebensdatenVerfasser"/>
+        <xs:element ref="Abfassungszeitraum"/>
+        <xs:element ref="Abfassungsort"/>
+        <xs:element ref="Regionen"/>
+        <xs:element ref="Editionshinweise"/>
+        <xs:element ref="Werkinformation"/>
+        <xs:element ref="Quellen"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="WerkId" type="xs:integer"/>
+  <xs:element name="WerkTitel" type="xs:string"/>
+  <xs:element name="Alternativtitel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="Titel"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Titel" type="xs:string"/>
+  <xs:element name="Autoren">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Autor"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Autor" type="xs:string"/>
+  <xs:element name="LebensdatenVerfasser" type="xs:string"/>
+  <xs:element name="Abfassungszeitraum" type="xs:string"/>
+  <xs:element name="Abfassungsort" type="xs:string"/>
+  <xs:element name="Regionen">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="Region"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Region" type="xs:string"/>
+  <xs:element name="Editionshinweise" type="xs:string"/>
+  <xs:element name="Werkinformation" type="xs:string"/>
+  <xs:element name="Quellen">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="Quelle"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Quelle">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="QuellenId"/>
+        <xs:element ref="Zitation"/>
+        <xs:element minOccurs="0" ref="ZeitangabeQuelle"/>
+        <xs:element ref="Inhaltsangabe"/>
+        <xs:element ref="VolltextOriginalsprache"/>
+        <xs:element minOccurs="0" ref="VolltextUebersetzung"/>
+        <xs:element minOccurs="0" ref="ZitationUebersetzung"/>
+        <xs:element ref="ZeitangabeWissenschaft"/>
+        <xs:element minOccurs="0" ref="GeographischesStichwort"/>
+        <xs:element ref="Beteiligte"/>
+        <xs:element minOccurs="0" ref="Interaktion"/>
+        <xs:element ref="Auffaelligkeiten"/>
+        <xs:element ref="Suchbegriffe"/>
+        <xs:element minOccurs="0" ref="Anmerkungen"/>
+        <xs:element ref="Entitaeten"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="QuellenId" type="xs:integer"/>
+  <xs:element name="Zitation" type="xs:string"/>
+  <xs:element name="ZeitangabeQuelle" type="xs:string"/>
+  <xs:element name="Inhaltsangabe" type="xs:string"/>
+  <xs:element name="VolltextOriginalsprache" type="xs:string"/>
+  <xs:element name="VolltextUebersetzung" type="xs:string"/>
+  <xs:element name="ZitationUebersetzung" type="xs:string"/>
+  <xs:element name="ZeitangabeWissenschaft" type="xs:string"/>
+  <xs:element name="GeographischesStichwort">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="Ort"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Beteiligte">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="Beteiligter"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Beteiligter" type="xs:string"/>
+  <xs:element name="Interaktion" type="xs:NCName"/>
+  <xs:element name="Auffaelligkeiten">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="Schlagwort"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Schlagwort" type="xs:string"/>
+  <xs:element name="Suchbegriffe">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="Suchwort"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Suchwort" type="xs:string"/>
+  <xs:element name="Anmerkungen" type="xs:string"/>
+  <xs:element name="Entitaeten">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Entitaet"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Entitaet">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Name"/>
+      </xs:sequence>
+      <xs:attribute name="Id" use="required"/>
+      <xs:attribute name="Type" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Id" type="xs:string"/>
+  <xs:element name="Name" type="xs:string"/>
+  <xs:element name="Alternativnamen">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Name"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Ort">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="Alternativnamen"/>
+        <xs:element ref="Id"/>
+        <xs:element ref="Name"/>
+        <xs:element ref="Typ"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Typ" type="xs:string"/>
+</xs:schema>

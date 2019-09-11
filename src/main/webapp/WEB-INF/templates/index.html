@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head lang="de">
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+		<title th:text="${projectTitle}">Sarazenen &amp;amp; Pera</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="/css/style.css" />
+		<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<div th:replace="header :: header">...</div>
+		<div class="container-fluid">
+			<div class="row">
+				<!-- Header Titel -->
+				<div class="title-header">
+					<h1 class="main-title">Gruppe 1</h1>
+					<p class="sub-title">Experimentelle historische Informationssysteme:</p>
+					<p class="sub-title">Testbedingungen und Aufbau digitaler mittelalterlicher Quellensammlungen</p>
+					<p class="sub-title">Verarbeitung mehrdimensionaler Daten:</p>
+					<p class="sub-title">Die genuesische Handelsniederlassung Pera in spätbyzantinischer Zeit</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-10">
+					<p>
+						Die folgende Webseite ist ein Projekt, dass im Rahmen des Hauptseminars 
+						<em>Experimentelle historische Informationssysteme: Testbedingungen und Aufbau digitaler mittelalterlicher 
+						Quellensammlungen</em> im Wintersemester 2016/17 an der Universität zu Köln entstanden ist.
+					</p>
+					<p>
+						Dabei handelt es sich um eine filterbare und durchsuchbare Onlinequellensammlung von Daten aus dem DFG-Projekt 
+						<a href="https://www.igw.uni-bonn.de/de/abteilungsseiten/mittelalter/forschung/das-islambild-im-lateinischen-westen">
+						<em>Saraceni, Mauri, Agareni, ... in lateinisch-christlichen Quellen des 7. bis 11. Jahrhunderts</em></a>
+						der Universität Bonn.
+					</p>
+					<p>
+						Die einzelnen Quellen können in Hinblick auf erwähnte Personen, Orte und andere inhaltliche Aspekte durchsucht 
+						werden und mithilfe verschiedener Visualisierungen analysiert werden.
+					</p>
+					<p>
+						Im Rahmen der Übung "Die genuesische Handelsniederlassung Pera in spätbyzantinischer Zeit" wurde das in einer
+						Übung eingesetzte Projekt weiterentwickelt, sodass es jetzt auch Quellen zu Pera (Galata) beinhaltet.
+					</p>
+					<p>
+						<strong>Hinweis zu den hier dargestellten Quellen:</strong>
+						Diese Daten stammen aus einem zwischen 2013 und 2017 von der DFG geförderten
+						Forschungsprojekt „Saraceni, Mauri, Agareni, ... in lateinisch-christlichen Quellen des
+						7. bis 11. Jahrhunderts“, das an der Rheinischen Friedrich-Wilhelms-Universität Bonn,
+						Institut für Geschichtswissenschaft, Abt. für Mittelalterliche Geschichte, das unter der
+						Leitung von Prof. Dr. Matthias Becher und unter Bearbeitung von Katharina Gahbler, M.A.
+						läuft. Die Daten sind auf einem inzwischen sehr veralteten Stand, die im Rahmen einer
+						Lehrveranstaltung der Universität zu Köln (Prof Dr. Oyvind Eide, HKI;
+						Katharina Gahbler, M.A.) im Wintersemester 2016/17 zu Test- und Entwicklungszwecken für
+						eine App benutzt worden sind. Die Daten sind in dieser Form nicht für eine
+						wissenschaftliche Nachnutzung gedacht und nutzbar. Künftig sollen die überarbeiteten
+						Projektdaten an geeigneter Stelle publiziert und zur Nachnutzung bereitgestellt werden.
+						Weitere Information zu dem Projekt finden Sie unter:
+						<a href="https://www.igw.uni-bonn.de/de/abteilungsseiten/mittelalter/forschung/saraceni">https://www.igw.uni-bonn.de/de/abteilungsseiten/mittelalter/forschung/saraceni</a>.
+					</p>
+					<hr/>
+					<p>
+						<strong>Dozenten:</strong>
+						<ol>
+							<li>Prof. Dr. Oyvind Eide</li>
+							<li>Katharina Gahbler, M.A.</li>
+							<li>Dr. Mabi Angar</li>
+						</ol>
+					</p>
+					<p>
+						<strong>Teilnehmer der Gruppe im Hauptseminar "Experimentelle historische Informationssysteme":</strong>
+						<ul>
+							<li>Alex Abboud</li>
+							<li>Andreas Gálffy</li>
+							<li>Britta Hermans</li>
+							<li>Dominik Leyendecker</li>
+							<li>Anne Pietsch</li>
+							<li>Nasrin Saef</li>
+							<li>Gwenlyn Tiedemann</li>
+							<li>Christian Weitz</li>
+						</ul>
+					</p>
+				</div>
+				<div class="col-md-2 sidebar-module">
+					<h2>Überblick</h2>
+					<ul class="list-group">
+						<li class="list-group-item">
+							<a href="workList">Quellenverzeichnis</a>
+						</li>
+						<li class="list-group-item">
+							<a href="persons">Personenregister - erwähnte Personen</a>
+						</li> 
+						<li class="list-group-item">
+							<a href="authors">Personenregiter - Quellenverfasser</a>
+						</li>
+						<li class="list-group-item">
+							<a href="places">Ortsregister</a>
+						</li>
+						<li class="list-group-item">
+							<a href="map">Karte</a>
+						</li>
+						<li class="list-group-item">
+							<a href="event">Auffälligkeiten</a>
+						</li>
+						<li class="list-group-item">
+							<a href="frequency">Häufigkeiten</a>
+						</li>
+					</ul> 
+				</div>
+			</div> <!--  /. row -->
+		</div> <!-- /. container -->
+		<div th:replace="footer :: footer">...</div>
+	</body>
+</html>

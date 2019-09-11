@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+		<title th:text="${projectTitle}">Sarazenen &amp; Pera</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+		<link rel="stylesheet" href="../css/theme.default.min.css" />
+		<link rel="stylesheet" href="/css/style.css" />
+		<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<script src="/js/lib/jquery.quicksearch.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.28.5/js/jquery.tablesorter.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js"></script>
+		<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+		<script src="/js/places-load.js"></script>
+		<script src="/js/format.js"></script>
+		<script src="/js/workSourceLoader.js"></script>
+	</head>
+	<body>
+		<div th:replace="header :: header"></div>
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+				var places = [[${places}]];
+				//console.log(places);
+			/*]]>*/
+		</script>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-6">
+					<h3 class="main-title">Ortsregister</h3>
+				</div>
+				<div class="col-md-6">
+					<!-- Quicksearch PlugIn, um Tabelle durchsuchen zu können -->
+					<form>
+						Suche: <input type="text" id="search" />
+					</form>
+				</div>
+			</div>
+			<div class="row" id="mainList">
+				<!-- Ortsregister Tabelle -->
+				<div class="col-md-9">
+					<table class="tablesorter" id="ortTable">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Alternativnamen</th>
+								<th>Typ</th>
+								<th>Vorkommnis</th>
+								<th>Geographisch</th>
+							</tr>
+						</thead>
+						<tbody id="bindOrte"> <!-- dynamisches Einbinden der Tabelleninhaltes, ab sofort per Thymeleaf! -->
+							<tr th:each="place,iter: ${places}">
+								<td th:text="${place.name}"></td>
+								<td>
+									<p th:each="altName: ${place.altNames}" th:text="${altName}"></p>
+								</td>
+								<td th:text="${place.type}"></td>
+								<td><a href="#viewOccurence" class="loadOccurence" data-queryType="place" th:attr="data-id=${place.id}">Auflistung anzeigen</a></td>
+								<td><a href="#" class="viewOnMap" th:attr="data-index=${iter.index}">auf Karte anzeigen</a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!-- Auflistung der Vorkommnisse des gewählten Begriffs in den Quellen - fixed position. Inhalte werden alle dynamisch eingebunden.-->
+				<div class="col-md-3">
+					<div id="viewOccurence">
+						
+					</div>
+				</div>
+			</div>
+			<!--  /.row Table + Vorkommnis -->
+		</div>
+		<!-- /. container -->
+		<div class="modal fade" id="map-places" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<!-- Header Titel -->
+					<div class="modal-header">
+						<h4 class="modal-title" id="showTitel"></h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body" id="map-canvas">
+						
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="workView"></div>
+		<div th:replace="footer :: footer">...</div>
+	</body>
+</html>

@@ -1,0 +1,251 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<!-- Die 3 Meta-Tags oben *müssen* zuerst im head stehen; jeglicher sonstiger head-Inhalt muss *nach* diesen Tags kommen -->
+<meta name="description" content="" />
+<meta name="author" content="" />
+<link rel="icon" href="/favicon.ico" />
+
+<!-- Latest (stable) compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous" />
+
+<!-- Individual theme -->
+<link rel="stylesheet" href="/css/style.css" />
+
+<title>Werkseditor</title>
+
+
+	<!-- jQuery first, then Tether, then Bootstrap JS. -->
+	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+		integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+		integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+		crossorigin="anonymous"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+		crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+	<!-- Menü -->
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Navigation ein-/ausblenden</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand">Sarazenen</a>
+			</div>
+
+			<!-- Search Button -->
+			<form class="navbar-form navbar-right">
+				<div class="form-group">
+					<input type="text" class="form-control" placeholder="Search" />
+				</div>
+				<button type="submit" class="btn btn-default">Submit</button>
+			</form>
+
+			<!-- Menüpunkte -->
+			<div id="navbar" class="collapse navbar-collapse">
+				<ul class="nav navbar-nav pull-right">
+					<li><a href="/">Start</a></li>
+					<li class="dropdown"><a href="#werke" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">Werke<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Alphabetisch</a></li>
+							<li><a href="#">Chronologisch</a></li>
+							<li class="active"><a href="/werk">Beispielseite
+									Werk</a></li>
+							<li><a href="/quellenstelle">Beispielseite
+									Quellenstelle</a></li>
+						</ul></li>
+					<li class="dropdown"><a href="#verfasser"
+						class="dropdown-toggle" data-toggle="dropdown" role="button"
+						aria-haspopup="true" aria-expanded="false">Verfasser<span
+							class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Alphabetisch</a></li>
+							<li><a href="#">Chronologisch</a></li>
+							<li><a href="/verfasser">Beispielseite Verfasser</a></li>
+						</ul></li>
+					<li class="dropdown"><a href="#Personenregister"
+						class="dropdown-toggle" data-toggle="dropdown" role="button"
+						aria-haspopup="true" aria-expanded="false">Personenregister<span
+							class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Alphabetisch</a></li>
+							<li><a href="#">Chronologisch</a></li>
+							<li><a href="/person">Beispielseite Person</a></li>
+						</ul></li>
+					<li><a href="/map">Map</a></li>
+					<li><a href="#kontakt">Kontakt</a></li>
+				</ul>
+
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</nav>
+	<!-- Menü Ende -->
+
+
+	<!-- Banner -->
+	<div class="container-fluid">
+		<div class="row">
+			<img src="/images/header.jpg" class="img-responsive"
+				alt="Aufgeschlagenes Buch" />
+		</div>
+	</div>
+
+
+	<div class="container">
+
+		<!-- Header Titel -->
+		<div class="title-header">
+			<h1 class="main-title">Quellenstelle bearbeiten</h1>
+		</div>
+		
+		<div class="row">
+
+			<!-- Main Content - form area -->
+			<div class="col-sm-8 werk-main">
+				<form action="#" th:action="@{/edit/submitSource}" th:object="${quelleForm}" method="post">
+					<!-- 
+					
+					<p>
+						<b></b> <input type="text" size="64" th:field="*{}" />
+					</p>
+				
+						<h3><a href="/edit/source/{workid}/{sourceid}(workid=${work.werkId},sourceid=${quelle.quellenId})" th:text="'Quellenstelle Nummer '+${quelle.quellenId}"></a></h3>-->
+						<p>
+							<b>Zitation:</b> 
+							<input name="zitation" type="text" size="128" th:field="*{zitation}"/>
+						</p>
+						<p th:if="${#fields.hasErrors('zitation')}" th:errors="*{zitation}">
+							Zitationseingabefehler
+						</p>
+						<p>
+							<b>Zitation der Übersetzung:</b>
+							<textarea name="zitationUebersetzung" rows="10" cols="90" th:field="*{zitationUebersetzung}"></textarea>
+						</p>
+						<p>
+							<b>Zeitangabe Quelle:</b>
+							<input name="zeitangabeQuelle" type="text" size="64" th:field="*{zeitangabeQuelle}" />
+						</p>
+						<p>
+							<b>Zeitangabe (wissenschaftlich):</b>
+							<input name="zeitangabeWissenschaft" type="text" size="64" th:field="*{zeitangabeWissenschaft}" />
+						</p>
+						<p th:if="${#fields.hasErrors('zeitangabeQuelle')}" th:errors="*{zeitangabeQuelle}">	
+							Fehler bei der wissenschaftlichen Zeitangabe
+						</p>
+						<p>
+							<b>Inhaltsangabe:</b>
+							<textarea name="inhaltsangabe" rows="4" cols="60" th:field="*{inhaltsangabe}"></textarea>
+						</p>
+						<p th:if="${#fields.hasErrors('inhaltsangabe')}" th:errors="*{inhaltsangabe}">	
+							Inhaltsangabenfehler
+						</p>
+						<p>
+							<b>Volltext Originalsprache:</b>
+							<textarea name="volltextOriginalsprache" rows="10" cols="90" th:field="*{volltextOriginalsprache}"></textarea>
+						</p>
+						<p th:if="${#fields.hasErrors('volltextOriginalsprache')}" th:errors="*{volltextOriginalsprache}">	
+							Fehler im Volltext Originalsprache
+						</p>
+						<p>
+							<b>Volltext Übersetzung:</b>
+							<textarea name="volltextUebersetzung" rows="10" cols="90" th:field="*{volltextUebersetzung}"></textarea>
+						</p>
+						<p th:if="${#fields.hasErrors('volltextUebersetzung')}" th:errors="*{volltextUebersetzung}">	
+							Fehler im Volltext Ühbersetzung
+						</p>
+						<!-- <p>
+							<b>geografische Stichwörter: </b> 
+							funktioniert nicht, weil der Marshaller die geografischen Stichworte auf das falsche Ort-Element mappt 
+							Entsprechend kann auch noch nicht validiert werden!
+							<input name="geografischeStichworte" type="text" size="64" th:field="*{geografischeStichworte}"/>
+						</p>-->
+						<p>
+							<b>Beteiligte:</b> 
+							<input name="beteiligte" type="text" size="64" th:field="*{beteiligte}"/>
+						</p>
+						<p th:if="${#fields.hasErrors('beteiligte')}" th:errors="*{beteiligte}">
+							Beteiligtenfehler
+						</p>
+						<p>
+							<b>Interaktion:</b> 
+							<input name="interaktion" type="checkbox" th:checked="*{interaktion}" />
+						</p>
+						<p>
+							<b>Auffälligkeiten:</b> 
+							<input name="auffaelligkeiten" type="text" size="64" th:field="*{auffaelligkeiten}" />
+						</p>
+						<p th:if="${#fields.hasErrors('auffaelligkeiten')}" th:errors="*{auffaelligkeiten}">
+							Auffälligkeitsfehler
+						</p>
+						<p>
+							<b>Suchbegriffe:</b> 
+							<input name="suchbegriffe" type="text" size="64" th:field="*{suchbegriffe}" />
+						</p>
+						<p th:if="${#fields.hasErrors('suchbegriffe')}" th:errors="*{suchbegriffe}">
+							Suchbegriffsfehler
+						</p>
+						<p>
+							<b>Anmerkungen:</b> 
+							<input name="anmerkungen" type="text" size="64" th:field="*{anmerkungen}" />
+						</p>
+						<p th:if="${#fields.hasErrors('anmerkungen')}" th:errors="*{anmerkungen}">
+							Anmerkungsfehler
+						</p>
+						<p>
+							<input name="quellenId" type="hidden" th:field="*{quellenId}"/>
+							<input name="werkId" type="hidden" th:field="*{werkId}"/>
+							<input type="submit" value="Bestätigen"/>
+						</p>
+				</form>
+			</div> 
+
+			<!-- Sidebar Links -->
+			<div class="sidebar-left"></div>
+
+			<!-- Sidebar Rechts -->
+
+			<div class="col-sm-3 col-sm-offset-1 werk-sidebar">
+			</div>
+
+
+
+		</div>
+		<!-- /.row -->
+
+	</div>
+	<!-- /.container -->
+
+	<!-- Footer -->
+	<footer class="blog-footer">
+		<p>
+			<a href="#">Zurück nach oben</a>
+		</p>
+	</footer>
+		
+</body>
+</html>

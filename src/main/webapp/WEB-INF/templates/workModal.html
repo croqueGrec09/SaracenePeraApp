@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	</head>
+	<body>
+		<!-- PopUp mit Quellendarstellung wird nicht mehr über JS erstellt, sondern per Bootstrap Modal eingebunden, weil sich die
+		PopUps sonst ins Gehege kommen. Paralleler Quellenvergleich wird über einen anderen Weg abzuwickeln sein. -->
+		<div th:fragment="workModal" class="modal fade" tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<!-- Header Titel -->
+					<div class="modal-header">
+						<h4 class="modal-title" id="showTitel"></h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body container-fluid">
+						<div class="row">
+							<!-- Header Titel -->
+							<div id="showTitle" class="title-header col-md-12">
+								<h1 class="main-title" th:text="${work.mainTitle}"></h1>
+								<p class="sub-title" th:text="${#strings.listJoin(work.altTitles, ', ')}"></p>
+							</div>
+						</div>
+						<div class="row">
+							<!-- Main Content: Abfassungszeitraum, Abfassungsort, Regionen, Editionshinweise und Werkinformationen-->
+							<div class="col-md-8 work-main">
+								<div id="showContent">
+									<p>
+										<strong>Abfassungszeitraum: </strong><span th:text="${work.origDate}"></span>
+									</p>
+									<p>
+										<strong>Abfassungsort: </strong><span th:text="${work.origPlace}"></span>
+									</p>
+									<p>
+										<strong>Region:</strong>
+										<ul id='showRegion'>
+											<li th:each="region: ${work.workRegions}">
+											<span th:text="${region}"></span>
+											</li>
+										</ul>
+									</p>
+									<p>
+										<strong>Editionshinweise: </strong><span th:text="${work.edRemarks}"></span>
+									</p>
+									<hr/>
+									<p>
+										<strong>Allgemeines:</strong><span th:text="${work.workInformation}"></span>
+									</p>
+								</div>
+								<div id="showMoreContent">
+								
+								</div>
+							</div>
+							<!--  Sidebar Rechts (blaue Box)s: QuellenListe-->
+							<div class="col-md-4">
+								<div id="showInfo" class='sidebar-module-r sidebar-module-inset'>
+									<h4>Verfasser</h4>
+									<p th:text="${#strings.listJoin(work.authors, ', ')}"></p>
+									<p th:text="${work.lifeDates}"></p>
+								</div>
+								<div class="sidebar-module-r">
+									<ol class="list-unstyled" id="sourceList">
+										<li th:each="source: ${work.sources}">
+											<a href="#" class="viewSource" th:attr="data-work=${work.workId}, data-source=${source.sourceId}" th:text="${source.sourceId}"></a> <a th:href="@{'/edit/source/' + ${work.workId} + '/' + ${source.sourceId}}">bearbeiten</a>
+										</li>
+									</ol>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
