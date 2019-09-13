@@ -22,7 +22,20 @@
                     <TEI:publicationStmt>
                         <TEI:publisher>Universität zu Köln</TEI:publisher>
                         <TEI:availability>
-                            <TEI:p>The source documents are freely available according to Prof. Dr. Matthias Becher and Katharina Gahbler</TEI:p>
+                            <TEI:p xml:lang="de">
+                                Diese Daten stammen aus einem zwischen 2013 und 2017 von der DFG geförderten Forschungsprojekt
+                                „Saraceni, Mauri, Agareni, ... in lateinisch-christlichen Quellen des 7. bis 11. Jahrhunderts“,
+                                das an der Rheinischen Friedrich-Wilhelms-Universität Bonn, Institut für Geschichtswissenschaft,
+                                Abt. für Mittelalterliche Geschichte, das unter der Leitung von Prof. Dr. Matthias Becher und
+                                unter Bearbeitung von Katharina Gahbler, M.A. läuft. Die Daten sind auf einem inzwischen sehr
+                                veralteten Stand, die im Rahmen einer Lehrveranstaltung der Universität zu Köln
+                                (Prof Dr. Oyvind Eide, HKI; Katharina Gahbler, M.A.) im Wintersemester 2016/17 zu Test- und
+                                Entwicklungszwecken für eine App benutzt worden sind. Die Daten sind in dieser Form nicht für
+                                eine wissenschaftliche Nachnutzung gedacht und nutzbar. Künftig sollen die überarbeiteten
+                                Projektdaten an geeigneter Stelle publiziert und zur Nachnutzung bereitgestellt werden. Weitere
+                                Information zu dem Projekt finden Sie unter:
+                                <TEI:link target="https://www.igw.uni-bonn.de/de/abteilungsseiten/mittelalter/forschung/saraceni."/>
+                            </TEI:p>
                         </TEI:availability>
                     </TEI:publicationStmt>
                     <TEI:sourceDesc>
