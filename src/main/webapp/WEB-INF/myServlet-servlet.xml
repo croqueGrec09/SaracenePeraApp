@@ -24,16 +24,16 @@
 		to the controller -->
 
 	<bean id="templateResolver"
-		class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
+		class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
 		<property name="prefix" value="/WEB-INF/templates/" />
 		<property name="suffix" value=".html" />
 		<property name="characterEncoding" value="UTF-8" />
 		<property name="templateMode" value="HTML5" />
 	</bean>
-	<bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+	<bean id="templateEngine" class="org.thymeleaf.spring5.SpringTemplateEngine">
 		<property name="templateResolver" ref="templateResolver" />
 	</bean>
-	<bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+	<bean class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
 		<property name="characterEncoding" value="UTF-8" />
 		<property name="contentType" value="text/html; charset=UTF-8" />
 		<property name="templateEngine" ref="templateEngine" />
